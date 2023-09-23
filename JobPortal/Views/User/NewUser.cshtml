@@ -1,0 +1,341 @@
+﻿@model JobPortal.Models.UserMV
+@{
+    ViewBag.Title = "Registration";
+}
+<section class="contact-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-lg-8">
+                @using (Html.BeginForm("NewUser", "User", FormMethod.Post, new
+                {
+                    @class = "form-contact ",
+                    enctype = "multipart/form-data"
+                    //@novalidate = "novalidate",
+                }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="card" style="border-radius: 15px;">
+                        <h2 class="contact-title" align="center">Registration</h2>
+                        <div class="card-body">
+                            <div class="row align-items-center pt-4 pb-3">
+                                <div class="col-md-3 ps-5">
+                                    <h6 class="mb-0">Full name</h6>
+                                </div>
+                                <div class="col-md-9 pe-5">
+                                    @Html.EditorFor(model => model.UserName, new
+                                             {
+                                                htmlAttributes = new
+                                                {
+                                                    @class = "form-control valid ",
+                                                    @id = "fname",
+                                                    @placeholder = "Enter your name",
+                                                    @onfocus = "Checkusername()",
+                                                    @onblur = "Checkusername()",
+                                                    @oninput = "Checkusername()",
+                                                }
+                                             })
+                                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                                    <span id="nameError" class="text-danger"></span>
+
+                                </div>
+                            </div>
+                            <div class="row align-items-center py-3">
+                                <div class="col-md-3 ps-5">
+                                    <h6 class="mb-0">Password</h6>
+                                </div>
+                                <div class="col-md-9 pe-5">
+                                    @Html.EditorFor(model => model.Password, new
+                               {
+                                   htmlAttributes = new
+                                   {
+                                       @class = "form-control valid",
+                                       @type = "password",
+                                       @id = "password",
+                                       @placeholder = "Enter password",
+                                       @onfocus = "CheckPassword()",
+                                       @onblur = "CheckPassword()",
+                                       @oninput = "CheckPassword()",
+
+                                   }
+                               })
+                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                    <span id="passwordError" class="text-danger"></span>
+
+                                </div>
+                            </div>
+                            <div class="row align-items-center py-3">
+                                <div class="col-md-3 ps-5">
+                                    <h6 class="mb-0">Confirm password</h6>
+                                </div>
+                                <div class="col-md-9 pe-5">
+                                    @Html.EditorFor(model => model.ConfirmPassword, new
+                        {
+                            htmlAttributes = new
+                            {
+                                @class = "form-control valid",
+                                @type = "password",
+                                @id = "confirmpassword",
+                                @placeholder = "Enter password again",
+                            }
+                        })
+                                    @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="row align-items-center py-3">
+                                <div class="col-md-3 ps-5">
+                                    <h6 class="mb-0">Contact number</h6>
+                                </div>
+                                <div class="col-md-9 pe-5">
+                                    @Html.EditorFor(model => model.ContactNo, new
+                               {
+                                   htmlAttributes = new
+                                   {
+                                       @class = "form-control valid",
+                                       @type = "tel",
+                                       @name = "mob",
+                                       @id = "mob",
+                                       @placeholder = "Enter your contact-no",
+                                       @oninput = "CheckContactNo()",
+                                       @onfocus = "CheckContactNo()",
+                                       @onblur = "CheckContactNo()",
+                                   }
+                               })
+                                    @Html.ValidationMessageFor(model => model.ContactNo, "", new { @class = "text-danger" })
+                                    <span id="contactNoError" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row align-items-center py-3">
+                                <div class="col-md-3 ps-5">
+                                    <h6 class="mb-0">Email address</h6>
+                                </div>
+                                <div class="col-md-9 pe-5">
+                                    @Html.EditorFor(model => model.EmailAddress, new
+                               {
+                                   htmlAttributes = new
+                                   {
+                                       @class = "form-control valid",
+                                       @type = "email",
+                                       @name = "mail",
+                                       @id = "mail",
+                                       @placeholder = "Enter e-mail address",
+                                       @oninput = "CheckEmail()",
+                                       @onfocus = "CheckEmail()",
+                                       @onblur = "CheckEmail()",
+                                   }
+                               })
+                                    @Html.ValidationMessageFor(model => model.EmailAddress, "", new { @class = "text-danger" })
+                                    <span id="emailError" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row align-items-center py-3">
+                                <div class="col-md-3 ps-5">
+                                    <h6 class="mb-0">Upload cv</h6>
+                                </div>
+                                <div class="col-md-9 pe-5">
+                                    <input type="file" name="FileUpload" />
+                                </div>
+                            </div>
+                            <div class="row align-items-center py-3">
+                                <div class="col-md-3 ps-5">
+                                    <h6 class="mb-0">Upload image</h6>
+                                </div>
+                                <div class="col-md-9 pe-5">
+                                    <input type="file" name="imageFile" />
+                                </div>
+                            </div>
+                            <div class="row align-items-center py-3">
+                                <p>
+                                    Are you job provider?
+                                    @Html.EditorFor(model => model.AreYouProvider)
+                                </p>
+                            </div>
+                            <div class="row align-items-center py-3" id="divcompanyname">
+                                <div class="col-md-3 ps-5">
+                                    <h6 class="mb-0">Company name</h6>
+                                </div>
+                                <div class="col-md-9 pe-5">
+                                    @Html.EditorFor(model => model.Company.CompanyName, new
+                                    {
+                                        htmlAttributes = new
+                                        {
+                                            @class = "form-control valid",
+                                            @type = "text",
+                                            @name = "companyname",
+                                            @id = "companyname",
+                                            @placeholder = "Enter company title",
+                                           // @onfocus = "this.placeholder = ''",
+                                            @onblur = "validateCompanyName(this)",
+                                        }
+                                    })
+                                    <div id="companyNameError" class="text-danger"></div>
+                                </div>
+                            </div>
+                            @*<div class="row align-items-center py-3" id="divcompanyname">
+                <div class="col-md-3 ps-5">
+                    <h6 class="mb-0">Company name</h6>
+                </div>
+                <div class="col-md-9 pe-5">
+                    @Html.EditorFor(model => model.Company.CompanyName, new
+        {
+            htmlAttributes = new
+            {
+                @class = "form-control valid",
+                @type = "text",
+                @name = "companyname",
+                @id = "companyname",
+                @placeholder = "Enter company title",
+
+            }
+        })
+                    @Html.ValidationMessageFor(model => model.Company.CompanyName, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+                            <div class="row align-items-center py-3" id="divcompanyphoneno">
+                                <div class="col-md-3 ps-5">
+                                    <h6 class="mb-0">Company number</h6>
+                                </div>
+                                <div class="col-md-9 pe-5">
+                                    @Html.EditorFor(model => model.Company.PhoneNo, new
+                                    {
+                                        htmlAttributes = new
+                                        {
+                                            @class = "form-control valid",
+                                            @type = "tel",
+                                            @id = "phoneNo",
+                                            @placeholder = "Enter company phone-no",
+                                            @onblur = "validatePhoneNumber()",
+                                        }
+                                    })
+                                    <div id="phoneNoError" class="text-danger"></div>
+                                </div>
+                            </div>
+                            @*<div class="row align-items-center py-3" id="divcompanyphoneno">
+               <div class="col-md-3 ps-5">
+                   <h6 class="mb-0">Company number</h6>
+               </div>
+               <div class="col-md-9 pe-5">
+                   @Html.EditorFor(model => model.Company.PhoneNo, new
+        {
+            htmlAttributes = new
+            {
+                @class = "form-control valid",
+                @type = "tel",
+                @name = "mob",
+                @id = "mob",
+                @placeholder = "Enter company phone-no",
+            }
+        })
+                   @Html.ValidationMessageFor(model => model.Company.PhoneNo, "", new { @class = "text-danger" })
+                   <small></small>
+               </div>
+           </div>*@
+                            <div class="row align-items-center py-3" id="divcompanyemail">
+                                <div class="col-md-3 ps-5">
+                                    <h6 class="mb-0">Company e-mail</h6>
+                                </div>
+                                <div class="col-md-9 pe-5">
+                                    @Html.EditorFor(model => model.Company.EmailAddress, new
+                               {
+                                   htmlAttributes = new
+                                   {
+                                       @class = "form-control valid",
+                                       @type = "email",
+                                       @name = "mail",
+                                       @id = "mail",
+                                       @placeholder = "Enter Company email address",
+                                       //@onfocus = "this.placeholder = ''",
+                                       //@onblur = "validateEmail(this)",
+                                       @oninput = "Checkemail()",
+                                       @onfocus = "Checkemail()",
+                                       @onblur = "Checkemail()",
+                                   }
+                               })
+                                    @Html.ValidationMessageFor(model => model.Company.EmailAddress, "", new { @class = "text-danger" })
+                                    <span id="emailerror" class="text-danger"></span>
+                                    
+                                    <small></small>
+                                </div>
+                            </div>
+                            @*<div class="row align-items-center py-3" id="divcompanyemail">
+            <div class="col-md-3 ps-5">
+                <h6 class="mb-0">Company e-mail</h6>
+            </div>
+            <div class="col-md-9 pe-5">
+                @Html.EditorFor(model => model.Company.EmailAddress, new
+           {
+               htmlAttributes = new
+               {
+                   @class = "form-control valid",
+                   @type = "email",
+                   @name = "mail",
+                   @id = "mail",
+                   @placeholder = "Enter Company email address",
+               }
+           })
+                @Html.ValidationMessageFor(model => model.Company.EmailAddress, "", new { @class = "text-danger" })
+                <span id="emailError" class="text-danger"></span>
+                <small></small>
+            </div>
+        </div>*@
+                            <div class="row align-items-center py-3" id="divcompanydescription">
+                                <div class="col-md-3 ps-5">
+                                    <h6 class="mb-0">Description</h6>
+                                </div>
+                                <div class="col-md-9 pe-5">
+                                    @Html.EditorFor(model => model.Company.Description, new
+                               {
+                                   htmlAttributes = new
+                                   {
+                                       @class = "form-control",
+                                       @type = "text",
+                                       @name = "companydescription",
+                                       @id = "companydescription",
+                                       @placeholder = "Enter company description",
+                                       //@onfocus = "this.placeholder = ''",
+                                       @onblur = "validateDescription(this)",
+                                   }
+                               })
+                                    @Html.ValidationMessageFor(model => model.Company.Description, "", new { @class = "text-danger" })
+                                    <span id="descriptionError" class="text-danger"></span>
+                                    <small></small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group mt-3 col">
+                        <input type="submit" value="Register" class="btn head-btn1" />
+                    </div>
+                }
+            </div>
+            <div class="col-lg-3 offset-lg-1">
+                <div class="media contact-info">
+                    <span class="contact-info__icon"><i class="ti-home"></i></span>
+                    <div class="media-body">
+                        <h3>Infopark Kakkanad</h3>
+                        <p>Cochin,Kerala</p>
+                    </div>
+                </div>
+                <div class="media contact-info">
+                    <span class="contact-info__icon"><i class="ti-tablet"></i></span>
+                    <div class="media-body">
+                        <h3>+91 04884 281942</h3>
+                        <p>Mon to Fri 9am to 6pm</p>
+                    </div>
+                </div>
+                <div class="media contact-info">
+                    <span class="contact-info__icon"><i class="ti-email"></i></span>
+                    <div class="media-body">
+                        <h3>support@jobfinder.com</h3>
+                        <p>Send us your query anytime!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="@Url.Content("~/Content/assets/js/jquery-3.3.1.min.js")"></script>
+<script src="@Url.Content("~/Content/assets/js/Validation.js")"></script>

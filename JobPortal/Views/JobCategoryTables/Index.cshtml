@@ -1,0 +1,37 @@
+﻿@model IEnumerable<DatabaseLayer.JobCategoryTable>
+
+@{
+    ViewBag.Title = "Categories";
+}
+
+<div class="section-top-border col-md-10">
+    <h3 class="mb-30">All category @Html.ActionLink("New category", "Create", null, new { @class = "btn btn-default", @style = "float:right;" })</h3>
+
+    <div class="progress-table-wrap">
+        <div class="progress-table">
+            <div class="table-head">
+                <div class="serial">#</div>
+                <div class="country">Category</div>
+                <div class="country">Description</div>
+                <div class="country">Action</div>
+
+            </div>
+
+            @foreach (var item in Model)
+            {
+                <div class="table-row">
+                    <div class="serial">@Html.DisplayFor(modelItem => item.JobCategoryID)</div>
+                    <div class="country"> @Html.DisplayFor(modelItem => item.JobCategory)</div>
+                    <div class="country"> @Html.DisplayFor(modelItem => item.Description)</div>
+                    <div class="country">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.JobCategoryID }, new { @class = "genric-btn primary" })
+
+                    </div>
+
+                </div>
+
+            }
+
+        </div>
+    </div>
+</div>

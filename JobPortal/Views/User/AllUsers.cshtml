@@ -1,0 +1,46 @@
+﻿@model IEnumerable<DatabaseLayer.UserTable>
+@{
+    ViewBag.Title = "All Users";
+}
+<div class="section-top-border col-md-20">
+    <h3 class="mb-30">All users</h3>
+    <div class="progress-table-wrap">
+        <div class="progress-table">
+            <div class="table-head">
+                @*<div class="country">User id</div>*@
+                <div class="country">User type</div>
+                <div class="country">Email address</div>
+                <div class="country">User name</div>
+                <div class="country">Contact no</div>
+                <div class="country">Image</div>
+                <div class="country">Resume</div>
+            </div>
+            @foreach (var item in Model)
+            {
+                <div class="table-row">
+                    @*<div class="country">@Html.DisplayFor(modelItem => item.UserID)</div>*@
+                    <div class="country">@Html.DisplayFor(modelItem => item.UserTypeTable.UserType)</div>
+                    <div class="country">@Html.DisplayFor(modelItem => item.EmailAddress)</div>
+                    <div class="country">@Html.DisplayFor(modelItem => item.UserName)</div>
+                    <div class="country">@Html.DisplayFor(modelItem => item.ContactNo)</div>
+                    <div class="country">
+                        @if (!string.IsNullOrEmpty(item.Image))
+                        {
+                            var imageBytes = Convert.FromBase64String(item.Image);
+                            var base64String = Convert.ToBase64String(imageBytes);
+                            <img src="data:image/jpeg;base64,@base64String" alt="Product image" width="80" />
+                        }
+                    </div>
+                    <div class="country">
+                        @if (item.FileData != null)
+                        {
+                            <a class="genric-btn primary-border small" href="@Url.Action("DownloadResume", "User", new { id = item.UserID})">Download</a>
+                            <a class="genric-btn primary-border small"href="@Url.Action("ViewResume", "User", new { id = item.UserID })" target="_blank">View</a>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<script src="@Url.Content("~/Content/assets/js/jquery-3.3.1.min.js")"></script>

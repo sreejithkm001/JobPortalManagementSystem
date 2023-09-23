@@ -1,0 +1,100 @@
+﻿@model JobPortal.Models.JobRequirementsMV
+
+@{
+    ViewBag.Title = "Job Requirements";
+}
+<section class="contact-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="contact-title">Add post job requirements</h2>
+
+            </div>
+
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.DropDownList("JobRequirementID", 
+                               null, 
+                               "select requirement", 
+                               htmlAttributes: new 
+                               { 
+                                   @class = "form-control" 
+                               })
+                                @Html.ValidationMessageFor(model => model.JobRequirementID, 
+                               "", 
+                               new 
+                               { 
+                                   @class = "text-danger" 
+                               })
+                                @Html.HiddenFor(model => model.PostJobID)
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-12">
+                            <div class="form-group">
+
+                                @Html.EditorFor(model => model.JobRequirementDetails, new
+                          {
+                              htmlAttributes = new
+                              {
+                                  @class = "form-control",
+                                  @type = "text",
+                                  @name = "jobdescription",
+                                  @id = "jobdescription",
+                                  @placeholder = "Enter description",
+                                  @onfocus = "this.placeholder = ''",
+                                  @onblur = "this.placeholder = 'Enter Description'",
+
+                              }
+                          })
+                                @Html.ValidationMessageFor(model => model.JobRequirementDetails, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group mt-3">
+                        <input type="submit" value="Add" class="button boxed-btn" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+<hr />
+<h2>Job requirements</h2>
+<table class="table table-hover">
+    <tr>
+        <th>
+            Requirement title
+        </th>
+        <th>
+            Details
+        </th>
+        <th>Action</th>
+    </tr>
+
+    @foreach (var item in Model.Details)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.JobRequirementsTable.JobRequirementTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JobRequirementDetails)
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "DeleteRequirements", new { id = item.JobRequirementDetailID }, new { @class = "genric btn-danger" })
+            </td>
+        </tr>
+    }
+
+</table>

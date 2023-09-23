@@ -1,0 +1,71 @@
+﻿@model JobPortal.Models.ForgotPasswordMV
+@{
+    ViewBag.Title = "Forgot";
+}
+<section class="contact-section">
+    <div class="container">
+        <div class="row">
+            <div class="job-category-listing mb-50">
+                <div class="col-md-12">
+                    <h2 class="contact-title" align="center">Forgot password</h2>
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                </div>
+
+                @using (Html.BeginForm("Forgot", "User", FormMethod.Post, new
+                {
+                    @class = "form-contact ",
+                    @novalidate = "novalidate"
+                }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                @Html.EditorFor(model => model.Email, new
+                           {
+                               htmlAttributes = new
+                               {
+                                   @class = "form-control valid",
+                                   @type = "text",
+                                   @name = "Email",
+                                   @id = "Email",
+                                   @placeholder = "Enter email",
+                                   @onfocus = "this.placeholder = ''",
+                                   @onblur = "this.placeholder = 'Enter Email'",
+                               }
+                           })
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-success" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group mt-3">
+                        <input type="submit" value="Send email" class="button boxed-btn" />
+                    </div>
+                }
+            </div>
+            <div class="col-md-6" style="padding:10px 0px 0px 60px">
+                <div class="media contact-info">
+                    <span class="contact-info__icon"><i class="ti-home"></i></span>
+                    <div class="media-body">
+                        <h3>Infopark Kakkanad</h3>
+                        <p>Cochin,Kerala</p>
+                    </div>
+                </div>
+                <div class="media contact-info">
+                    <span class="contact-info__icon"><i class="ti-tablet"></i></span>
+                    <div class="media-body">
+                        <h3>+91 04884 281942</h3>
+                        <p>Mon to Fri 9am to 6pm</p>
+                    </div>
+                </div>
+                <div class="media contact-info">
+                    <span class="contact-info__icon"><i class="ti-email"></i></span>
+                    <div class="media-body">
+                        <h3>support@jobfinder.com</h3>
+                        <p>Send us your query anytime!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,93 @@
+﻿@model JobPortal.Models.UserLoginMV
+@{
+    ViewBag.Title = "Login";
+}
+<section class="contact-section">
+    <div class="container">
+        <div class="row">
+            <div class="job-category-listing mb-50">
+                <div class="col-md-12">
+                    <h2 class="contact-title" align="center">Login</h2>
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                </div>
+                @using (Html.BeginForm("Login", "User", FormMethod.Post, new
+                {
+                    @class = "form-contact ",
+                    //@novalidate = "novalidate"
+                }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                @Html.EditorFor(model => model.EmailAddress, new
+                           {
+                               htmlAttributes = new
+                               {
+                                   @class = "form-control valid",
+                                   @type = "email",
+                                   @name = "name",
+                                   @id = "name",
+                                   @placeholder = "Enter user name",
+                                   @oninput = "Checkemail()",
+                               }
+                           })
+                                @Html.ValidationMessageFor(model => model.EmailAddress, "", new { @class = "text-danger" })
+                                <span id="emailerror" class="text-danger"></span>
+                                <small></small>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                            </div>
+                            @Html.EditorFor(model => model.Password, new
+                     {
+                         htmlAttributes = new
+                         {
+                             @class = "form-control valid",
+                             @type = "password",
+                             @name = "password",
+                             @id = "password",
+                             @placeholder = "Enter password",
+                             @oninput = "Checkpassword()",
+                         }
+                     })
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                            <span id="passwordError" class="text-danger"></span>
+                            <small></small>
+                        </div>
+                    </div>
+                    <div class="form-group mt-3">
+                        <input type="submit" value="Login" class="btn head-btn1" />
+                        <a href="@Url.Content("~/User/Forgot")" style="float:right;padding:20px 0px 0px 0px;" class="btn-link">Forgot password?</a>
+                    </div>
+                }
+            </div>
+            <div class="col-md-6" style="padding:10px 0px 0px 60px">
+                <div class="media contact-info">
+                    <span class="contact-info__icon"><i class="ti-home"></i></span>
+                    <div class="media-body">
+                        <h3>Infopark Kakkanad</h3>
+                        <p>Cochin,Kerala</p>
+                    </div>
+                </div>
+                <div class="media contact-info">
+                    <span class="contact-info__icon"><i class="ti-tablet"></i></span>
+                    <div class="media-body">
+                        <h3>+91 04884 281942</h3>
+                        <p>Mon to Fri 9am to 6pm</p>
+                    </div>
+                </div>
+                <div class="media contact-info">
+                    <span class="contact-info__icon"><i class="ti-email"></i></span>
+                    <div class="media-body">
+                        <h3>support@jobfinder.com</h3>
+                        <p>Send us your query anytime!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="@Url.Content("~/Content/assets/js/jquery-3.3.1.min.js")"></script>
+<script src="@Url.Content("~/Content/assets/js/Validation.js")"></script>

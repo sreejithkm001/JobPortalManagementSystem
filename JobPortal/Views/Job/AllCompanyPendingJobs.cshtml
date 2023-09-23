@@ -1,0 +1,73 @@
+﻿@model IEnumerable<DatabaseLayer.PostJobTable>
+@{
+    ViewBag.Title = "All Company Pending Jobs";
+}
+<div class="section-top-border col-md-40">
+    <div class="progress-table-wrap">
+        <div class="progress-table">
+            <div class="table-head">
+                <div class="country">
+                    Job title
+                </div>
+                <div class="country">
+                    Salary
+                </div>
+                <div class="country">
+                    Location
+                </div>
+                <div class="country">
+                    Vacancy
+                </div>
+                <div class="country">
+                    Post date
+                </div>
+                <div class="country">
+                    Job category
+                </div>
+                <div class="country">
+                    Job status
+                </div>
+                <div class="country">
+                    Action
+                </div>
+            </div>
+            @foreach (var item in Model)
+            {
+                <div class="table-row">
+                    <div class="country">
+                        @Html.DisplayFor(modelItem => item.JobTitle)
+                    </div>
+                    <div class="country">
+                        ₹@item.MinSalary- @item.MaxSalary.ToString("")
+                    </div>
+                    <div class="country">
+                        @Html.DisplayFor(modelItem => item.Location)
+                    </div>
+                    <div class="country">
+                        @Html.DisplayFor(modelItem => item.Vacancy)
+                    </div>
+                    <div class="country">
+                        @item.PostDate.ToString("dd MMM,yyyy")
+                    </div>
+                    <div class="country">
+                        @Html.DisplayFor(modelItem => item.JobCategoryTable.JobCategory)
+                    </div>
+                    <div class="country">
+                        @Html.DisplayFor(modelItem => item.JobStatusTable.JobStatus)
+                    </div>
+                    <div class="country">
+                        <div>
+                            @Html.ActionLink("View", "JobDetails", new { id = item.PostJobID }, new { @class = "genric btn-primary" })
+                            @Html.ActionLink("Delete", "AdminDeleteJobPost", new { id = item.PostJobID }, new { @class = "genric btn-danger" })
+                        </div>
+                
+                        <div>
+                            @Html.ActionLink("Cancel", "CancelledPost", new { id = item.PostJobID }, new { @class = "genric btn-danger" })
+                            @Html.ActionLink("Approve", "ApprovedPost", new { id = item.PostJobID }, new { @class = "genric btn-success" })
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,139 @@
+﻿@model JobPortal.Models.FilterJobMV
+@{
+    ViewBag.Title = "Filter Job";
+}
+
+
+@using (Html.BeginForm("FilterJob", "Job", FormMethod.Post, new
+{
+    @class = "form-contact ",
+    @novalidate = "novalidate"
+}))
+{
+
+    <!-- Hero Area Start-->
+    <div class="slider-area ">
+        <div class="single-slider section-overly slider-height2 d-flex align-items-center" data-background="@Url.Content("~/Content/assets/img/hero/about.jpg")">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="hero-caption text-center">
+                            <h2>Get your job</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Hero Area End -->
+    <!-- Job List Area Start -->
+    <div class="job-listing-area pt-120 pb-120">
+        <div class="container">
+            <div class="row">
+                <!-- Left content -->
+                <div class="col-xl-3 col-lg-3 col-md-4">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="small-section-tittle2 mb-45">
+                                <div class="ion">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                         xmlns:xlink="http://www.w3.org/1999/xlink"
+                                         width="20px" height="12px">
+                                        <path fill-rule="evenodd" fill="rgb(27, 207, 107)"
+                                              d="M7.778,12.000 L12.222,12.000 L12.222,10.000 L7.778,10.000 L7.778,12.000 ZM-0.000,-0.000 L-0.000,2.000 L20.000,2.000 L20.000,-0.000 L-0.000,-0.000 ZM3.333,7.000 L16.667,7.000 L16.667,5.000 L3.333,5.000 L3.333,7.000 Z" />
+                                    </svg>
+                                </div>
+                                <h4>Filter jobs</h4>
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Job Category Listing start -->
+                    <div class="job-category-listing mb-50">
+                        <!-- single one -->
+                        <div class="single-listing">
+                            <div class="small-section-tittle2">
+                                <h4>Job category</h4>
+                            </div>
+                            <!-- Select job items start -->
+                            <div class="select-job-items2">
+                                @Html.DropDownList("JobCategoryID", null, "select category", htmlAttributes: new { @class = "form-control" })
+                                @*@Html.ValidationMessageFor(model => model.JobCategoryID, "", new { @class = "text-danger" })*@
+                            </div>
+
+                            <div class="small-section-tittle2">
+                                <h4>Job type</h4>
+                            </div>
+                            <!-- Select job items start -->
+                            <div class="select-job-items2">
+                                @Html.DropDownList("JobNatureID", null, "select type", htmlAttributes: new { @class = "form-control" })
+                               @* @Html.ValidationMessageFor(model => model.JobNatureID, "", new { @class = "text-danger" })*@
+                            </div>
+                        </div>
+                        <div>
+
+                            <aside class="left_widgets p_filter_widgets price_rangs_aside sidebar_box_shadow">
+                                <div class="small-section-tittle2">
+                                    <hr />
+                                </div>
+                                <div class="widgets_inner">
+                                    <div class="range_item">
+                                        <input type="submit" value="Filter" class="button boxed-btn" />
+                                    </div>
+                                </div>
+                            </aside>
+                            <!-- Range Slider End -->
+                        </div>
+                    </div>
+                    <!-- Job Category Listing End -->
+                </div>
+                <!-- Right content -->
+                <div class="col-xl-9 col-lg-9 col-md-8">
+                    <!-- Featured_job_start -->
+                    <section class="featured-job-area">
+                        <div class="container">
+                            <!-- Count of Job list Start -->
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="count-job mb-35">
+                                        <span>@Model.Result.Count() Jobs found</span>
+                                        <!-- Select job items start -->
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Count of Job list End -->
+                            @foreach (var item in Model.Result)
+                            {
+
+                                <div class="single-job-items mb-30">
+                                    <div class="job-items">
+                                        <div class="company-img">
+                                            <a href="#"><img src="assets/img/icon/job-list3.png" alt=""></a>
+                                        </div>
+                                        <div class="job-tittle job-tittle2">
+                                            <a href="@Url.Content("~/Job/JobDetails/"+item.PostJobID+"")">
+                                                <h4>@item.JobTitle</h4>
+                                            </a>
+                                            <ul>
+                                                <li>@item.CompanyTable.CompanyName</li>
+                                                <li><i class="fas fa-map-marker-alt"></i>@item.Location</li>
+                                                <li>₹@item.MinSalary- @item.MaxSalary</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="items-link items-link2 f-right">
+                                        <a>@item.JobNatureTable.JobNature</a>
+                                        <span>@((int)(DateTime.Now - item.PostDate).Days) Day ago</span>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </section>
+                    <!-- Featured_job_end -->
+                </div>
+            </div>
+        </div>
+    </div>
+ }
